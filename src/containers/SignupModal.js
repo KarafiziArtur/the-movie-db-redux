@@ -26,8 +26,6 @@ class SignupModal extends Component {
     if (nextProps.user.error) {
       const {code, message} = nextProps.user.error;
 
-      console.log('typeof', typeof message);
-
       if (code === 'auth/weak-password') {
         this.setState({
           errorEmail: '',
