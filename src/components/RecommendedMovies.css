@@ -1,0 +1,33 @@
+.RecommendedMovies {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background: #00ACC1;
+    padding: 15px 5px;
+}
+
+.RecommendedMovies__list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.RecommendedMovies__list a {
+    text-decoration: none;
+    font-weight: 300;
+    color: #fff;
+}
+
+.RecommendedMovies__title {
+    margin-bottom: 10px;
+    text-align: center;
+    color: #fff;
+}
+
+.RecommendedMovie {
+    margin: 15px 15px 15px 0;
+}
+
+.RecommendedMovie__title {
+    max-width: 250px;
+    margin: 5px 0 10px;
+}

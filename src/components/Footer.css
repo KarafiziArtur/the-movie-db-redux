@@ -1,0 +1,12 @@
+.Footer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.Footer a {
+    color: #111;
+}

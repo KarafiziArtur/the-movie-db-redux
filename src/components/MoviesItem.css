@@ -1,0 +1,45 @@
+.MoviesItem {
+    width: 445px;
+    height: auto;
+    margin: 10px;
+    align-self: flex-start;
+}
+
+.CardTitle {
+    padding: 4px 16px 16px !important;
+}
+
+.CardTitle > span:nth-child(1) {
+    font-size: 18px !important;
+    line-height: 27px!important;
+    max-width: 330px;
+}
+
+.TitleInformation {
+    float: right;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
+.TitleInformation__rating {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+.rating__number {
+    color: white;
+    vertical-align: top;
+    position: relative;
+    top: 3px;
+    right: 2px;
+}
+
+.rating__icon {
+    width: 20px !important;
+    height: 20px !important;
+}

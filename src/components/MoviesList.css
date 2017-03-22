@@ -1,0 +1,20 @@
+.MoviesList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    margin: 0 15px;
+}
+
+.MoviesGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.PageHeader {
+    text-align: center;
+    font-size: 27px!important;
+    line-height: 70px!important;
+}

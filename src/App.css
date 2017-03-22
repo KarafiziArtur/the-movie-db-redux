@@ -1,0 +1,27 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+}
+
+.root {
+    height: 100vh;
+}
+
+.App {
+    height: 100vh;
+}
+
+.App__content {
+    min-height: calc(100vh - 142.5px);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.App__footer {
+    background: rgb(0, 188, 212);
+}
+
+.MoviesCard {
+    padding: 10px;
+}
