@@ -12,14 +12,12 @@ const RecommendedMovie = ({ movie }) => (
 const renderMovies = (movies) => {
   if (movies.length) {
     // eslint-disable-next-line
-    return movies.map((movie, index) => {
-      if (index <= 5) {
-        return <Link to={`/movie/${movie.id}`} key={movie.id}><RecommendedMovie movie={movie} /></Link>
-      }
-    });
-  } else {
-    return <p>There is no recommended movies for this movie.</p>
+    return movies.slice(0, 6).map(movie => (
+            <Link to={`/movie/${movie.id}`} key={movie.id}><RecommendedMovie movie={movie} /></Link>
+        )
+    );
   }
+  return <p>There are no recommended movies for this movie.</p>;
 };
 
 const RecommendedMovies = ({ movies }) => (
