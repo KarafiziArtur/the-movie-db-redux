@@ -16,20 +16,18 @@ injectTapEventPlugin();
 class App extends Component {
 
   static propTypes = {
-    ownProps: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    ownProps: PropTypes.object.isRequired
   };
 
   componentDidMount() {
-    this.props.dispatch(firebaseStateObserver());
-    this.props.dispatch(getGenres());
+    this.props.firebaseStateObserver();
+    this.props.getGenres();
   }
 
   handleSearchSubmit = (query) => {
     event.preventDefault();
-    if (query) {
-      this.props.ownProps.router.push(`/search?query=${encodeURIComponent(query)}`);
-    }
+    // if query does exist then go to appropriate route
+    query && this.props.ownProps.router.push(`/search?query=${encodeURIComponent(query)}`);
   };
 
   render() {
@@ -54,4 +52,9 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => ({ ownProps });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  getGenres: () => dispatch(getGenres()),
+  firebaseStateObserver: () => dispatch(firebaseStateObserver())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
