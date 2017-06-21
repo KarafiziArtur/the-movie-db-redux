@@ -6,6 +6,11 @@ import TextField from "material-ui/TextField";
 
 import { logIn } from '../actions/userActions';
 
+const localStyles = {
+  dialog: { width: '350px' },
+  submitButton: { marginTop: '25px', float: 'right' }
+};
+
 class LoginModal extends Component {
 
   static propTypes = {
@@ -24,12 +29,14 @@ class LoginModal extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.error) {
       const { code, message } = nextProps.user.error;
+
       if (code === 'auth/user-not-found') {
         this.setState({
           errorEmail: message,
           errorPassword: ''
         });
       }
+
       if (code === 'auth/wrong-password') {
         this.setState({
           errorEmail: '',
@@ -58,41 +65,41 @@ class LoginModal extends Component {
 
     const { email, password } = this.state;
     const user = { email, password };
-    this.props.dispatch(logIn(user));
-
+    this.props.logIn(user);
   };
 
   render() {
+    const { email, errorEmail, password, errorPassword } = this.state;
 
     return (
         <Dialog
             title="Login form"
-            contentStyle={{width: '350px'}}
+            contentStyle={localStyles.dialog}
             modal={false}
             open={this.props.isOpen}
             onRequestClose={this.handleClose}
         >
           <form onSubmit={this.login}>
             <TextField floatingLabelText="Enter your email"
-                       errorText={this.state.errorEmail}
+                       errorText={errorEmail}
                        fullWidth={true}
                        onChange={this.onChangeHandler}
                        name="email"
                        type="email"
-                       value={this.state.email}
+                       value={email}
                        required
             />
             <TextField floatingLabelText="Enter your password"
-                       errorText={this.state.errorPassword}
+                       errorText={errorPassword}
                        fullWidth={true}
                        onChange={this.onChangeHandler}
                        name="password"
                        type="password"
-                       value={this.state.password}
+                       value={password}
                        required
             />
             <RaisedButton
-                style={{ marginTop: '25px', float: 'right' }}
+                style={localStyles.submitButton}
                 label="Log in"
                 secondary={true}
                 type="submit"
@@ -103,10 +110,8 @@ class LoginModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  };
-};
+const mapStateToProps = state => ({ user: state.user });
 
-export default connect(mapStateToProps)(LoginModal);
+const mapDispatchToProps = dispatch => ({ logIn: user => dispatch(logIn(user)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);
