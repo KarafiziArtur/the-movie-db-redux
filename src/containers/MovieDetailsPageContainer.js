@@ -6,10 +6,14 @@ import {clearMovie, getMovie, addMovieToFavorite, removeMovieFromFavorite, getRe
 
 import MovieDetailsPage from '../components/MovieDetailsPage';
 
+const localStyles = {
+  errorText: { textAlign: 'center' },
+  progressBar: { display: 'block', margin: '30px auto' }
+};
+
 class MovieDetailsPageContainer extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     genres: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
     movie: PropTypes.object.isRequired,
@@ -24,22 +28,24 @@ class MovieDetailsPageContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const currentMovieId = this.props.ownProps.params.id;
     const nextMovieId = nextProps.ownProps.params.id;
+
     if (currentMovieId !== nextMovieId) {
       this.loadMovie(nextMovieId);
     }
   }
 
   componentWillUnmount() {
-    this.props.dispatch(clearMovie());
+    this.props.clearMovie();
   }
 
   loadMovie = (movieId) => {
-    this.props.dispatch(getMovie(movieId));
-    this.props.dispatch(getRecommendedMovies(movieId));
+    this.props.getMovie(movieId);
+    this.props.getRecommendedMovies(movieId);
   };
 
   isFavoriteMovie = () => {
     const { user, movie } = this.props;
+
     if (user.isLoggedIn) {
       return !!user.favoriteMovies.find(favoriteMovie => favoriteMovie.id === movie.id);
     }
@@ -48,23 +54,23 @@ class MovieDetailsPageContainer extends Component {
   addToFavorite = () => {
     const movieId = this.props.ownProps.params.id;
     const userId = this.props.user.userId;
-    this.props.dispatch(addMovieToFavorite(movieId, userId))
+    this.props.addMovieToFavorite(movieId, userId);
   };
 
   removeFromFavorite = () => {
     const movieId = this.props.ownProps.params.id;
     const userId = this.props.user.userId;
-    this.props.dispatch(removeMovieFromFavorite(movieId, userId))
+    this.props.removeMovieFromFavorite(movieId, userId);
   };
 
   render() {
 
     if (this.props.movie.error) {
-      return <h2 style={{ textAlign: 'center' }}>{this.props.movie.error}</h2>;
+      return <h2 style={localStyles.errorText}>{this.props.movie.error}</h2>;
     }
 
     if (!this.props.movie.isLoaded) {
-      return <CircularProgress style={{ display: 'block', margin: '30px auto' }}/>
+      return <CircularProgress style={localStyles.progressBar}/>
     }
 
     return (
@@ -80,6 +86,19 @@ class MovieDetailsPageContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({user: state.user, genres: state.genres, movie: state.movie, ownProps});
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user,
+  genres: state.genres,
+  movie: state.movie,
+  ownProps
+});
 
-export default connect(mapStateToProps)(MovieDetailsPageContainer);
+const mapDispatchToProps = dispatch => ({
+  getMovie: movieId => dispatch(getMovie(movieId)),
+  addMovieToFavorite: (movieId, userId) => dispatch(addMovieToFavorite(movieId, userId)),
+  removeMovieFromFavorite: (movieId, userId) => dispatch(removeMovieFromFavorite(movieId, userId)),
+  getRecommendedMovies: movieId => dispatch(getRecommendedMovies(movieId)),
+  clearMovie: () => dispatch(clearMovie())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetailsPageContainer);
