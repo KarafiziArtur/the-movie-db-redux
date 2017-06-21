@@ -10,12 +10,14 @@ class MoviesItemContainer extends Component {
   static propTypes = {
     user: PropTypes.object,
     movie: PropTypes.object.isRequired,
-    genres: PropTypes.array.isRequired
+    genres: PropTypes.array.isRequired,
+    addMovieToFavorite: PropTypes.func.isRequired,
+    removeMovieFromFavorite: PropTypes.func.isRequired
   };
 
   isFavoriteMovie = () => {
     const { user, movie } = this.props;
-    
+
     if (user.isLoggedIn) {
       return !!user.favoriteMovies.find(favoriteMovie => favoriteMovie.id === movie.id);
     }
@@ -33,7 +35,7 @@ class MoviesItemContainer extends Component {
 
   render() {
     const {movie, genres, user} = this.props;
-    
+
     return (
         <MoviesItem
             movie={movie}
