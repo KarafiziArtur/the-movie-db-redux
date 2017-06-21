@@ -18,6 +18,11 @@ class MovieDetailsPageContainer extends Component {
     user: PropTypes.object.isRequired,
     movie: PropTypes.object.isRequired,
     ownProps: PropTypes.object.isRequired,
+    clearMovie: PropTypes.func.isRequired,
+    getMovie: PropTypes.func.isRequired,
+    addMovieToFavorite: PropTypes.func.isRequired,
+    removeMovieFromFavorite: PropTypes.func.isRequired,
+    getRecommendedMovies: PropTypes.func.isRequired
   };
 
   componentDidMount() {
