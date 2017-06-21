@@ -5,11 +5,9 @@ import {addMovieToFavorite, removeMovieFromFavorite} from '../actions/movieActio
 
 import MoviesItem from '../components/MoviesItem';
 
-
 class MoviesItemContainer extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     user: PropTypes.object,
     movie: PropTypes.object.isRequired,
     genres: PropTypes.array.isRequired
@@ -17,6 +15,7 @@ class MoviesItemContainer extends Component {
 
   isFavoriteMovie = () => {
     const { user, movie } = this.props;
+    
     if (user.isLoggedIn) {
       return !!user.favoriteMovies.find(favoriteMovie => favoriteMovie.id === movie.id);
     }
@@ -24,16 +23,17 @@ class MoviesItemContainer extends Component {
 
   addToFavorite = () => {
     const {movie, user} = this.props;
-    this.props.dispatch(addMovieToFavorite(movie.id, user.userId));
+    this.props.addMovieToFavorite(movie.id, user.userId);
   };
 
   removeFromFavorite = () => {
     const {movie, user} = this.props;
-    this.props.dispatch(removeMovieFromFavorite(movie.id, user.userId));
+    this.props.removeMovieFromFavorite(movie.id, user.userId);
   };
 
   render() {
     const {movie, genres, user} = this.props;
+    
     return (
         <MoviesItem
             movie={movie}
@@ -49,4 +49,9 @@ class MoviesItemContainer extends Component {
 
 const mapStateToProps = state => ({ user: state.user });
 
-export default connect(mapStateToProps)(MoviesItemContainer);
+const mapDispatchToProps = dispatch => ({
+  addMovieToFavorite: (movieId, userId) => dispatch(addMovieToFavorite(movieId, userId)),
+  removeMovieFromFavorite: (movieId, userId) => dispatch(removeMovieFromFavorite(movieId, userId))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviesItemContainer);
