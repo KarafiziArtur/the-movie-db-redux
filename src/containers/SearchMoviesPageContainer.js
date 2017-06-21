@@ -14,7 +14,9 @@ class SearchMoviesPageContainer extends Component {
   static propsTypes = {
     ownProps: PropTypes.object.isRequired,
     movies: PropTypes.object.isRequired,
-    genres: PropTypes.array.isRequired
+    genres: PropTypes.array.isRequired,
+    clearMovies: PropTypes.func.isRequired,
+    searchMovies: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -24,7 +26,7 @@ class SearchMoviesPageContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const searchText = this.props.ownProps.location.query.query;
     const newSearchText = nextProps.ownProps.location.query.query;
-    
+
     if (searchText !== newSearchText) {
       this.loadMovies(newSearchText);
     }
