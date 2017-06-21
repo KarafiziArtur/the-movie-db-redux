@@ -9,7 +9,9 @@ class PopularMoviesPageContainer extends Component {
 
   static propTypes = {
     movies: PropTypes.object.isRequired,
-    genres: PropTypes.array.isRequired
+    genres: PropTypes.array.isRequired,
+    clearMovies: PropTypes.func.isRequired,
+    getPopularMovies: PropTypes.func.isRequired
   };
 
   componentDidMount() {
