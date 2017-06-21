@@ -9,45 +9,46 @@ class PopularMoviesPageContainer extends Component {
 
   static propTypes = {
     movies: PropTypes.object.isRequired,
-    genres: PropTypes.array.isRequired,
-    dispatch: PropTypes.func.isRequired
+    genres: PropTypes.array.isRequired
   };
 
   componentDidMount() {
-    this.props.dispatch(getPopularMovies());
+    this.props.getPopularMovies();
   }
 
   componentWillUnmount() {
-    this.props.dispatch(clearMovies());
+    this.props.clearMovies();
   }
 
-  loadMore = (callback) => {
+  loadMore = () => {
     const { page, total_pages } = this.props.movies;
 
     if (page < total_pages) {
       const nextPage = page + 1;
-      this.props.dispatch(callback(nextPage));
+      this.props.getPopularMovies(nextPage);
     }
   };
 
   render() {
     return (
-        <MoviesList callback={getPopularMovies}
-                    loadMore={this.loadMore}
-                    movies={this.props.movies}
-                    genres={this.props.genres}
-                    title="Popular Movies"
+        <MoviesList
+            loadMore={this.loadMore}
+            movies={this.props.movies}
+            genres={this.props.genres}
+            title="Popular Movies"
         />
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
+const mapStateToProps = state => ({
     movies: state.movies,
-    genres: state.genres,
-    ownProps
-  }
-};
+    genres: state.genres
+});
 
-export default connect(mapStateToProps)(PopularMoviesPageContainer);
+const mapDispatchToProps = dispatch => ({
+  getPopularMovies: nextPage => dispatch(getPopularMovies(nextPage)),
+  clearMovies: () => dispatch(clearMovies())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PopularMoviesPageContainer);
