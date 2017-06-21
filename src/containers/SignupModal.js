@@ -5,13 +5,18 @@ import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import {createNewUser} from "../actions/userActions";
 
+const localStyles = {
+  dialog: { width: '350px' },
+  submitButton: { marginTop: '25px', float: 'right' }
+};
+
 class SignupModal extends Component {
 
   static propTypes = {
-    isOpen: PropTypes.bool.isRequired,
     closeModal: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    createNewUser: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired
   };
 
   state = {
@@ -57,14 +62,10 @@ class SignupModal extends Component {
 
     if (password === confirmPassword) {
       const newUser = {email, password};
-
-      this.props.dispatch(createNewUser(newUser));
+      this.props.createNewUser(newUser);
     } else {
-      this.setState({
-        errorPassword: 'The password must match'
-      });
+      this.setState({ errorPassword: 'Passwords must match' });
     }
-
   };
 
   onChangeHandler = (event) => {
@@ -74,45 +75,49 @@ class SignupModal extends Component {
   };
 
   render() {
-    return (
+    const { email, errorEmail, password, errorPassword, confirmPassword } = this.state;
 
+    return (
         <Dialog
             title="Signup form"
-            contentStyle={{width: '350px'}}
+            contentStyle={localStyles.dialog}
             modal={false}
             open={this.props.isOpen}
             onRequestClose={this.handleClose}
         >
           <form onSubmit={this.firebaseCreateUser}>
-            <TextField floatingLabelText="Enter your email"
-                       errorText={this.state.errorEmail}
-                       fullWidth={true}
-                       onChange={this.onChangeHandler}
-                       name="email"
-                       type="email"
-                       value={this.state.email}
-                       required
+            <TextField 
+                floatingLabelText="Enter your email"                       
+                errorText={errorEmail}                       
+                fullWidth={true}                       
+                onChange={this.onChangeHandler}                       
+                name="email"                       
+                type="email"                       
+                value={email}                       
+                required
             />
-            <TextField floatingLabelText="Enter your password"
-                       errorText={this.state.errorPassword}
-                       fullWidth={true}
-                       onChange={this.onChangeHandler}
-                       name="password"
-                       type="password"
-                       value={this.state.password}
-                       required
+            <TextField 
+                floatingLabelText="Enter your password"                       
+                errorText={errorPassword}                       
+                fullWidth={true}                       
+                onChange={this.onChangeHandler}                       
+                name="password"                       
+                type="password"                       
+                value={password}                       
+                required
             />
-            <TextField floatingLabelText="Confirm your password"
-                       errorText={this.state.errorPassword}
-                       fullWidth={true}
-                       onChange={this.onChangeHandler}
-                       name="confirmPassword"
-                       type="password"
-                       value={this.state.confirmPassword}
-                       required
+            <TextField 
+                floatingLabelText="Confirm your password"                       
+                errorText={errorPassword}                       
+                fullWidth={true}                       
+                onChange={this.onChangeHandler}                       
+                name="confirmPassword"                       
+                type="password"                       
+                value={confirmPassword}                       
+                required
             />
             <RaisedButton
-                style={{marginTop: '25px', float: 'right'}}
+                style={localStyles.submitButton}
                 label="Create"
                 secondary={true}
                 type="submit"
@@ -123,10 +128,8 @@ class SignupModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  };
-};
+const mapStateToProps = state => ({ user: state.user });
 
-export default connect(mapStateToProps)(SignupModal);
+const mapDispatchToProps = dispatch => ({ createNewUser: newUser => dispatch(createNewUser(newUser)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupModal);
