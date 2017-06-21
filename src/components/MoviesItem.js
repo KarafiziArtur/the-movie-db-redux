@@ -10,7 +10,13 @@ import {Card, CardActions, CardMedia, CardTitle, CardText} from "material-ui/Car
 
 import {truncate, renderGenres, formatDate} from '../helpers';
 
-const MoviesItem = ({movie, genres, logged, isFavorite, addToFavorite, removeFromFavorite}) => (
+const localStyles = {
+  genres: { minHeight: '20px' },
+  noImage: { maxWidth: '500px', height: '250.4px', background: 'gray' },
+  overviewText: { minHeight: '56px' }
+};
+
+const MoviesItem = ({ movie, genres, logged, isFavorite, addToFavorite, removeFromFavorite }) => (
     <Card className="MoviesItem">
       <Link to={`movie/${movie.id}`}>
         <CardMedia
@@ -30,22 +36,21 @@ const MoviesItem = ({movie, genres, logged, isFavorite, addToFavorite, removeFro
                     </div>
                   }
                   title={movie.original_title}
-                  subtitle={<div style={{minHeight: '20px'}}>{renderGenres(genres)}</div>}
+                  subtitle={<div style={localStyles.genres}>{renderGenres(genres)}</div>}
               />
             }>
           {
             movie.backdrop_path ?
               <img src={`https://image.tmdb.org/t/p/w500_and_h281_bestv2${movie.backdrop_path}`} alt=""/>
               :
-              <div style={{maxWidth: '500px', height: '250.4px', background: 'gray'}}></div>
+              <div style={localStyles.noImage} />
           }
         </CardMedia>
       </Link>
-      <CardText style={{minHeight: '56px'}}>{truncate(movie.overview)}</CardText>
+      <CardText style={localStyles.overviewText}>{truncate(movie.overview)}</CardText>
       {
         logged &&
         <CardActions>
-
             {
               isFavorite ?
                   <IconButton tooltip="Remove from favorites" onClick={ removeFromFavorite }>
@@ -56,7 +61,6 @@ const MoviesItem = ({movie, genres, logged, isFavorite, addToFavorite, removeFro
                     <FavoriteBorder color="red"/>
                   </IconButton>
             }
-
         </CardActions>
       }
     </Card>
