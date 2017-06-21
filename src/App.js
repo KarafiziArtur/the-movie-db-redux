@@ -16,7 +16,9 @@ injectTapEventPlugin();
 class App extends Component {
 
   static propTypes = {
-    ownProps: PropTypes.object.isRequired
+    ownProps: PropTypes.object.isRequired,
+    firebaseStateObserver: PropTypes.func.isRequired,
+    getGenres: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -52,7 +54,7 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => ({ ownProps });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   getGenres: () => dispatch(getGenres()),
   firebaseStateObserver: () => dispatch(firebaseStateObserver())
 });
