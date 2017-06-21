@@ -30,7 +30,8 @@ const localStyles = {
 class Navbar extends Component {
 
   static propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    logoutFromFirebase: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -117,8 +118,8 @@ class Navbar extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ user: state.user });
+const mapStateToProps = state => ({ user: state.user });
 
-const mapDispatchToProps = (dispatch) => ({ logoutFromFirebase: () => dispatch(logoutFromFirebase()) });
+const mapDispatchToProps = dispatch => ({ logoutFromFirebase: () => dispatch(logoutFromFirebase()) });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
