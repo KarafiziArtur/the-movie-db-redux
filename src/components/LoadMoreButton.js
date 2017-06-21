@@ -3,7 +3,7 @@ import AddCircleOutline from 'material-ui/svg-icons/content/add-circle-outline';
 import RaisedButton from 'material-ui/RaisedButton';
 import './LoadMoreButton.css';
 
-const LoadMoreButton = ({ callback, page, total_pages, loadMore }) => {
+const LoadMoreButton = ({ page, total_pages, loadMore }) => {
 
   if (page < total_pages) {
     return <RaisedButton
@@ -12,12 +12,12 @@ const LoadMoreButton = ({ callback, page, total_pages, loadMore }) => {
         fullWidth={true}
         label="Load more"
         labelPosition="before"
-        onClick={loadMore.bind(null, callback)}
+        onClick={loadMore}
         primary={true}
     />;
   }
 
-  return <div className="EndOfMoviesList">End of Movies list.</div>;
+  return <div className="EndOfMoviesList">End of the Movies list.</div>;
 };
 
 export default LoadMoreButton;
