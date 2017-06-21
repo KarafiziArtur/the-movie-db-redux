@@ -16,7 +16,8 @@ class LoginModal extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
     closeModal: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    logIn: PropTypes.func.isRequired
   };
 
   state = {
