@@ -3,6 +3,11 @@ import {connect} from 'react-redux';
 
 import MoviesList from '../components/MoviesList';
 
+const localStyles = {
+  noPermissionText: { textAlign: 'center', marginTop: '20px' },
+  noMoviesText: { textAlign: 'center', marginTop: '20px' }
+};
+
 class FavoriteMoviesPageContainer extends Component {
 
   static propsTypes = {
@@ -16,13 +21,11 @@ class FavoriteMoviesPageContainer extends Component {
     };
 
     if (!this.props.user.isLoggedIn) {
-      return (
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>You have no permission for access to this page.</div>
-      );
+      return <div style={localStyles.noPermissionText}>You have no permission for access to this page.</div>;
     }
 
     if (!this.props.user.favoriteMovies.length) {
-      return <div style={{ textAlign: 'center', marginTop: '20px' }}>There is no favorite movies.</div>;
+      return <div style={localStyles.noMoviesText}>There are no favorite movies.</div>;
     }
 
     return (
